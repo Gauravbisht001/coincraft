@@ -113,7 +113,44 @@
 
     <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-3 pointer-events-none"></div>
 
-    <!-- NAVBAR HEADER -->
+    <!-- CUSTOM BUDGET EDIT MODAL -->
+    <div id="budget-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm hidden">
+        <div class="glass-card w-full max-w-md p-6 rounded-3xl border border-slate-700 space-y-5 shadow-2xl transform transition-all">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-wallet"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-extrabold text-white">Edit Monthly Budget</h3>
+                        <p class="text-xs text-slate-400">Set your total allowance for the month</p>
+                    </div>
+                </div>
+                <button id="modal-close" class="text-slate-400 hover:text-white text-sm cursor-pointer">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-3">
+                <label for="modal-budget-input" class="block text-xs font-bold uppercase text-slate-300">New Budget Amount (₹)</label>
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-400 font-mono font-bold">₹</span>
+                    <input type="number" id="modal-budget-input" step="0.01" min="1" class="w-full pl-9 pr-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-white font-mono text-base focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all" placeholder="6000.00">
+                </div>
+            </div>
+
+            <div class="flex items-center justify-end gap-3 pt-2">
+                <button id="modal-cancel" class="px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs transition-all cursor-pointer">
+                    Cancel
+                </button>
+                <button id="modal-save" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 text-white font-bold text-xs shadow-lg shadow-emerald-500/20 transition-all cursor-pointer">
+                    Save Budget
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- NAVBAR -->
     <header class="sticky top-0 z-40 w-full glass-nav">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
             <a href="#" class="flex items-center gap-3 group">
@@ -132,6 +169,13 @@
                     <span id="live-clock">--:--:--</span>
                 </div>
 
+                <select id="lang-select" class="px-3.5 py-2 text-xs font-bold rounded-xl bg-slate-900 border border-slate-700 text-slate-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 cursor-pointer transition-all">
+                    <option value="en">🇺🇸 EN</option>
+                    <option value="es">🇪🇸 ES</option>
+                    <option value="fr">🇫🇷 FR</option>
+                    <option value="hi">🇮🇳 HI</option>
+                </select>
+
                 <button id="btn-reset" type="button" class="flex items-center gap-2 px-3.5 py-2 text-xs font-bold rounded-xl bg-slate-900 text-slate-300 hover:text-rose-400 hover:bg-rose-500/10 border border-slate-800 hover:border-rose-500/30 transition-all cursor-pointer">
                     <i class="fa-solid fa-rotate-right"></i>
                     <span class="hidden sm:inline">Reset</span>
@@ -140,10 +184,10 @@
         </div>
     </header>
 
-    <!-- MAIN BODY CONTENT -->
+    <!-- MAIN CONTENT -->
     <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
 
-        <!-- HERO SECTION & BUDGET SUMMARY BAR -->
+        <!-- HERO SECTION -->
         <section class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 pb-2">
             <div>
                 <span class="text-xs font-bold uppercase tracking-wider text-cyan-400 flex items-center gap-2">
@@ -166,7 +210,7 @@
             </div>
         </section>
 
-        <!-- 4 CORE METRIC CARDS -->
+        <!-- METRIC CARDS -->
         <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             <div class="glass-card rounded-2xl p-6 relative overflow-hidden group hover:border-emerald-500/30 transition-all">
                 <div class="flex items-center justify-between mb-3">
@@ -217,7 +261,7 @@
             </div>
         </section>
 
-        <!-- EXPENDITURE FLOWCHART & TIMELINE ANALYTICS SECTION -->
+        <!-- FLOWCHART SECTION -->
         <section class="glass-card rounded-3xl p-6 sm:p-8 space-y-6">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800">
                 <div>
@@ -276,7 +320,7 @@
             </div>
         </section>
 
-        <!-- CORE APP WORKSPACE: ADD EXPENSE + TRANSACTIONS LIST -->
+        <!-- FORM & TRANSACTIONS SECTION -->
         <section class="grid lg:grid-cols-12 gap-8 items-start">
             <div class="lg:col-span-5 glass-card rounded-3xl p-6 sm:p-8 space-y-5 sticky top-24">
                 <div class="flex items-center gap-3">
@@ -353,15 +397,9 @@
                 </div>
             </div>
         </section>
-
     </main>
 
-    <!-- FOOTER -->
-    <footer class="w-full glass-nav mt-12 py-6 text-center text-xs text-slate-500">
-        <p>CoinCraft Student Budget Visualizer &copy; 2026. Empowering smart student financial futures.</p>
-    </footer>
-
-    <!-- JAVASCRIPT APP LOGIC -->
+    <!-- JAVASCRIPT -->
     <script>
         let state = {
             monthlyBudget: 6000,
@@ -512,18 +550,32 @@
             });
         }
 
-        // Edit Budget functionality
+        // Custom Modal Logic for Budget Editing
+        const modal = document.getElementById('budget-modal');
+        const modalInput = document.getElementById('modal-budget-input');
+
         document.getElementById('btn-edit-budget').addEventListener('click', () => {
-            const newBudget = prompt("Enter new monthly budget amount (₹):", state.monthlyBudget);
-            if (newBudget !== null) {
-                const parsed = parseFloat(newBudget);
-                if (!isNaN(parsed) && parsed > 0) {
-                    state.monthlyBudget = parsed;
-                    renderAll();
-                    showToast("Monthly budget updated successfully!");
-                } else {
-                    showToast("Please enter a valid amount greater than 0.", "error");
-                }
+            modalInput.value = state.monthlyBudget;
+            modal.classList.remove('hidden');
+            modalInput.focus();
+        });
+
+        function closeModal() {
+            modal.classList.add('hidden');
+        }
+
+        document.getElementById('modal-close').addEventListener('click', closeModal);
+        document.getElementById('modal-cancel').addEventListener('click', closeModal);
+
+        document.getElementById('modal-save').addEventListener('click', () => {
+            const parsed = parseFloat(modalInput.value);
+            if (!isNaN(parsed) && parsed > 0) {
+                state.monthlyBudget = parsed;
+                renderAll();
+                closeModal();
+                showToast("Monthly budget updated successfully!");
+            } else {
+                showToast("Please enter a valid amount greater than 0.", "error");
             }
         });
 
