@@ -225,4 +225,405 @@
                 </p>
             </div>
 
-            <div class="glass-card rounded-2xl p-6 relative overflow-hidden group hover:border-rose
+            <div class="glass-card rounded-2xl p-6 relative overflow-hidden group hover:border-rose-500/30 transition-all">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Total Spent</span>
+                    <div class="w-10 h-10 rounded-xl bg-rose-500/10 text-rose-400 flex items-center justify-center text-base">
+                        <i class="fa-solid fa-receipt"></i>
+                    </div>
+                </div>
+                <h2 id="metric-spent" class="text-3xl font-extrabold text-white font-mono">₹0.00</h2>
+                <div class="mt-3 w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
+                    <div id="bar-spent-progress" class="bg-rose-500 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="glass-card rounded-2xl p-6 relative overflow-hidden group hover:border-cyan-500/30 transition-all">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Remaining Balance</span>
+                    <div class="w-10 h-10 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center text-base">
+                        <i class="fa-solid fa-piggy-bank"></i>
+                    </div>
+                </div>
+                <h2 id="metric-remaining" class="text-3xl font-extrabold text-cyan-400 font-mono">₹6,000.00</h2>
+                <p id="sub-remaining" class="text-xs text-slate-400 font-medium mt-2">100% available</p>
+            </div>
+
+            <div class="glass-card rounded-2xl p-6 relative overflow-hidden group hover:border-purple-500/30 transition-all">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Safe Daily Limit</span>
+                    <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-base">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                </div>
+                <h2 id="metric-daily-limit" class="text-3xl font-extrabold text-purple-400 font-mono">₹200.00</h2>
+                <p id="sub-daily-limit" class="text-xs text-slate-400 font-medium mt-2">Days left in month: --</p>
+            </div>
+        </section>
+
+        <!-- FLOWCHART SECTION -->
+        <section class="glass-card rounded-3xl p-6 sm:p-8 space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+                <div>
+                    <h2 class="text-xl font-extrabold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-diagram-project text-cyan-400"></i> Expenditure Flowchart & Timeline
+                    </h2>
+                    <p class="text-xs text-slate-400 mt-1">Interactive visual map of capital distribution across timeframe views</p>
+                </div>
+
+                <div class="flex items-center p-1.5 rounded-2xl bg-slate-900 border border-slate-800 self-start sm:self-auto">
+                    <button id="btn-tf-daily" class="px-4 py-2 rounded-xl text-xs font-bold transition-all text-slate-400 hover:text-white cursor-pointer" onclick="setTimeframe('daily')">Daily</button>
+                    <button id="btn-tf-weekly" class="px-4 py-2 rounded-xl text-xs font-bold transition-all text-slate-400 hover:text-white cursor-pointer" onclick="setTimeframe('weekly')">Weekly</button>
+                    <button id="btn-tf-monthly" class="px-4 py-2 rounded-xl text-xs font-bold transition-all bg-gradient-to-r from-emerald-500 to-cyan-500 text-white shadow-md cursor-pointer" onclick="setTimeframe('monthly')">Monthly</button>
+                </div>
+            </div>
+
+            <div class="relative bg-slate-950/60 rounded-2xl p-6 border border-slate-800/80 overflow-x-auto">
+                <div class="min-w-[680px]">
+                    <svg class="w-full h-24 mb-2" viewBox="0 0 700 80" fill="none">
+                        <path d="M 350 10 L 150 70" stroke="rgba(16, 185, 129, 0.4)" stroke-width="2" class="flow-animated-line" />
+                        <path d="M 350 10 L 350 70" stroke="rgba(244, 63, 94, 0.4)" stroke-width="2" class="flow-animated-line" />
+                        <path d="M 350 10 L 550 70" stroke="rgba(6, 182, 212, 0.4)" stroke-width="2" class="flow-animated-line" />
+                    </svg>
+
+                    <div class="space-y-6">
+                        <div class="flex justify-center">
+                            <div class="glass-card px-8 py-3.5 rounded-2xl border-emerald-500/30 text-center min-w-[240px] shadow-lg shadow-emerald-500/10">
+                                <p class="text-[10px] uppercase font-extrabold tracking-wider text-emerald-400">Total Capital Pool</p>
+                                <p id="flow-val-budget" class="text-xl font-extrabold text-white font-mono mt-0.5">₹6,000.00</p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-4 text-center">
+                            <div class="glass-card p-4 rounded-2xl border-emerald-500/20">
+                                <p class="text-[10px] font-bold uppercase text-emerald-400">Savings Reserve</p>
+                                <p id="flow-val-reserve" class="text-lg font-extrabold text-white font-mono mt-1">₹6,000.00</p>
+                            </div>
+
+                            <div class="glass-card p-4 rounded-2xl border-rose-500/20">
+                                <p class="text-[10px] font-bold uppercase text-rose-400">Total Spent</p>
+                                <p id="flow-val-spent" class="text-lg font-extrabold text-white font-mono mt-1">₹0.00</p>
+                            </div>
+
+                            <div class="glass-card p-4 rounded-2xl border-cyan-500/20">
+                                <p class="text-[10px] font-bold uppercase text-cyan-400">Safe Allowance</p>
+                                <p id="flow-val-allowance" class="text-lg font-extrabold text-white font-mono mt-1">₹200.00 / day</p>
+                            </div>
+                        </div>
+
+                        <div class="pt-4 border-t border-slate-800">
+                            <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-4 text-center">Active Category Distribution</p>
+                            <div id="flowchart-category-nodes" class="grid grid-cols-5 gap-3"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FORM & TRANSACTIONS SECTION -->
+        <section class="grid lg:grid-cols-12 gap-8 items-start">
+            <div class="lg:col-span-5 glass-card rounded-3xl p-6 sm:p-8 space-y-5 sticky top-24">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-plus-circle"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-extrabold text-white">Add New Expense</h3>
+                        <p class="text-xs text-slate-400">Record a purchase or college fee</p>
+                    </div>
+                </div>
+
+                <form id="expense-form" class="space-y-4">
+                    <div>
+                        <label for="exp-title" class="block text-xs font-bold uppercase text-slate-300 mb-1.5">Description</label>
+                        <input type="text" id="exp-title" required placeholder="e.g. Textbooks, Cafeteria, Subway" class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all">
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label for="exp-amount" class="block text-xs font-bold uppercase text-slate-300 mb-1.5">Amount (₹)</label>
+                            <input type="number" id="exp-amount" step="0.01" min="0.01" required placeholder="0.00" class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-white placeholder-slate-500 text-sm font-mono focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all">
+                        </div>
+                        <div>
+                            <label for="exp-category" class="block text-xs font-bold uppercase text-slate-300 mb-1.5">Category</label>
+                            <select id="exp-category" class="w-full px-3 py-3 rounded-xl bg-slate-900 border border-slate-700 text-white text-sm focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all cursor-pointer">
+                                <option value="Food & Mess">🍔 Food & Mess</option>
+                                <option value="Stationery">📚 Stationery</option>
+                                <option value="Hostel & Rent">🏠 Hostel & Rent</option>
+                                <option value="Travel & Metro">🚇 Travel & Metro</option>
+                                <option value="Leisure & Fun">🎉 Leisure & Fun</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="exp-date" class="block text-xs font-bold uppercase text-slate-300 mb-1.5">Date</label>
+                        <input type="date" id="exp-date" required class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-white text-sm focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all">
+                    </div>
+
+                    <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 via-cyan-500 to-purple-600 text-white font-extrabold text-sm shadow-lg shadow-emerald-500/20 hover:opacity-95 transition-all cursor-pointer">
+                        Add Expense
+                    </button>
+                </form>
+            </div>
+
+            <!-- TRANSACTIONS LIST -->
+            <div class="lg:col-span-7 glass-card rounded-3xl p-6 sm:p-8 space-y-6">
+                <div class="flex items-center justify-between pb-4 border-b border-slate-800">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-lg">
+                            <i class="fa-solid fa-list-check"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-extrabold text-white">Recent Transactions</h3>
+                            <p class="text-xs text-slate-400">Manage and filter your spending history</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <select id="filter-category" class="px-3 py-2 text-xs font-bold rounded-xl bg-slate-900 border border-slate-700 text-slate-200 focus:outline-none focus:ring-2 focus:ring-cyan-500 cursor-pointer">
+                            <option value="all">All Categories</option>
+                            <option value="Food & Mess">Food & Mess</option>
+                            <option value="Stationery">Stationery</option>
+                            <option value="Hostel & Rent">Hostel & Rent</option>
+                            <option value="Travel & Metro">Travel & Metro</option>
+                            <option value="Leisure & Fun">Leisure & Fun</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="transactions-container" class="space-y-3 max-h-[500px] overflow-y-auto pr-1">
+                    <!-- Dynamic Items -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        let state = {
+            monthlyBudget: 6000,
+            timeframe: 'monthly',
+            filterCategory: 'all',
+            expenses: [
+                { id: 1, title: 'College Cafeteria Lunch', amount: 150, category: 'Food & Mess', date: new Date().toISOString().split('T')[0] },
+                { id: 2, title: 'Notebook & Pens', amount: 250, category: 'Stationery', date: new Date().toISOString().split('T')[0] }
+            ]
+        };
+
+        const categoriesConfig = {
+            'Food & Mess': { color: '#f43f5e', icon: 'fa-burger' },
+            'Stationery': { color: '#06b6d4', icon: 'fa-book' },
+            'Hostel & Rent': { color: '#8b5cf6', icon: 'fa-house' },
+            'Travel & Metro': { color: '#10b981', icon: 'fa-train-subway' },
+            'Leisure & Fun': { color: '#f59e0b', icon: 'fa-gamepad' }
+        };
+
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast-enter px-4 py-3 rounded-2xl glass-card border flex items-center gap-3 text-xs font-bold text-white shadow-xl ${type === 'success' ? 'border-emerald-500/40 bg-slate-900/90 text-emerald-400' : 'border-rose-500/40 bg-slate-900/90 text-rose-400'}`;
+            toast.innerHTML = `<i class="fa-solid ${type === 'success' ? 'fa-circle-check text-emerald-400' : 'fa-circle-exclamation text-rose-400'} text-base"></i><span>${message}</span>`;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(20px)';
+                toast.style.transition = 'all 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('live-clock').textContent = now.toLocaleTimeString();
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        document.getElementById('exp-date').valueAsDate = new Date();
+
+        function setTimeframe(tf) {
+            state.timeframe = tf;
+            ['daily', 'weekly', 'monthly'].forEach(t => {
+                const btn = document.getElementById(`btn-tf-${t}`);
+                if (t === tf) {
+                    btn.className = 'px-4 py-2 rounded-xl text-xs font-bold transition-all bg-gradient-to-r from-emerald-500 to-cyan-500 text-white shadow-md cursor-pointer';
+                } else {
+                    btn.className = 'px-4 py-2 rounded-xl text-xs font-bold transition-all text-slate-400 hover:text-white cursor-pointer';
+                }
+            });
+            renderAll();
+        }
+
+        function getDaysInMonth() {
+            const now = new Date();
+            return new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+        }
+
+        function renderAll() {
+            const totalSpent = state.expenses.reduce((acc, curr) => acc + curr.amount, 0);
+            const remaining = state.monthlyBudget - totalSpent;
+            const daysInMonth = getDaysInMonth();
+            const todayDate = new Date().getDate();
+            const daysLeft = Math.max(1, daysInMonth - todayDate + 1);
+            const dailyLimit = Math.max(0, remaining / daysLeft);
+
+            // Update Header Budget
+            document.getElementById('val-monthly-budget').textContent = `₹${state.monthlyBudget.toFixed(2)}`;
+
+            // Update Metrics
+            document.getElementById('metric-budget').textContent = `₹${state.monthlyBudget.toFixed(2)}`;
+            document.getElementById('metric-spent').textContent = `₹${totalSpent.toFixed(2)}`;
+            document.getElementById('metric-remaining').textContent = `₹${remaining.toFixed(2)}`;
+            document.getElementById('metric-daily-limit').textContent = `₹${dailyLimit.toFixed(2)}`;
+
+            const spentPercent = state.monthlyBudget > 0 ? Math.min(100, (totalSpent / state.monthlyBudget) * 100) : 0;
+            document.getElementById('bar-spent-progress').style.width = `${spentPercent}%`;
+            document.getElementById('sub-remaining').textContent = `${(100 - spentPercent).toFixed(1)}% available`;
+            document.getElementById('sub-daily-limit').textContent = `Days left in month: ${daysLeft}`;
+
+            // Flowchart values
+            document.getElementById('flow-val-budget').textContent = `₹${state.monthlyBudget.toFixed(2)}`;
+            document.getElementById('flow-val-reserve').textContent = `₹${remaining.toFixed(2)}`;
+            document.getElementById('flow-val-spent').textContent = `₹${totalSpent.toFixed(2)}`;
+            document.getElementById('flow-val-allowance').textContent = `₹${dailyLimit.toFixed(2)} / day`;
+
+            // Category Distribution Nodes in Flowchart
+            let multiplier = 1;
+            if (state.timeframe === 'daily') multiplier = 1 / daysInMonth;
+            if (state.timeframe === 'weekly') multiplier = 7 / daysInMonth;
+
+            const flowchartContainer = document.getElementById('flowchart-category-nodes');
+            flowchartContainer.innerHTML = '';
+            Object.keys(categoriesConfig).forEach(cat => {
+                const catTotal = state.expenses.filter(e => e.category === cat).reduce((acc, curr) => acc + curr.amount, 0);
+                const adjustedVal = catTotal * multiplier;
+                const node = document.createElement('div');
+                node.className = 'glass-card p-3 rounded-xl text-center border-slate-800';
+                node.innerHTML = `
+                    <div class="text-xs font-bold text-slate-300 truncate">${cat}</div>
+                    <div class="text-sm font-extrabold font-mono mt-1" style="color: ${categoriesConfig[cat].color}">₹${adjustedVal.toFixed(2)}</div>
+                `;
+                flowchartContainer.appendChild(node);
+            });
+
+            // Transactions Render
+            const txContainer = document.getElementById('transactions-container');
+            const filtered = state.expenses.filter(e => state.filterCategory === 'all' || e.category === state.filterCategory);
+
+            if (filtered.length === 0) {
+                txContainer.innerHTML = `
+                    <div class="text-center py-10 text-slate-500 text-xs">
+                        <i class="fa-solid fa-folder-open text-2xl mb-2"></i>
+                        <p>No transactions found</p>
+                    </div>
+                `;
+                return;
+            }
+
+            txContainer.innerHTML = '';
+            filtered.forEach(tx => {
+                const cfg = categoriesConfig[tx.category] || { color: '#10b981', icon: 'fa-tag' };
+                const item = document.createElement('div');
+                item.className = 'flex items-center justify-between p-3.5 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-slate-700 transition-all';
+                item.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white" style="background-color: ${cfg.color}20; color: ${cfg.color}">
+                            <i class="fa-solid ${cfg.icon}"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-bold text-white">${tx.title}</h4>
+                            <div class="flex items-center gap-2 text-[11px] text-slate-400 mt-0.5">
+                                <span class="px-2 py-0.5 rounded-md bg-slate-800 text-slate-300">${tx.category}</span>
+                                <span><i class="fa-regular fa-calendar mr-1"></i>${tx.date}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <span class="text-sm font-extrabold font-mono text-rose-400">-₹${tx.amount.toFixed(2)}</span>
+                        <button onclick="deleteExpense(${tx.id})" class="w-8 h-8 rounded-lg bg-slate-800 text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 flex items-center justify-center transition-all cursor-pointer">
+                            <i class="fa-solid fa-trash-can text-xs"></i>
+                        </button>
+                    </div>
+                `;
+                txContainer.appendChild(item);
+            });
+        }
+
+        // Custom Modal Logic for Budget Editing
+        const modal = document.getElementById('budget-modal');
+        const modalInput = document.getElementById('modal-budget-input');
+
+        document.getElementById('btn-edit-budget').addEventListener('click', () => {
+            modalInput.value = state.monthlyBudget;
+            modal.classList.remove('hidden');
+            modalInput.focus();
+        });
+
+        function closeModal() {
+            modal.classList.add('hidden');
+        }
+
+        document.getElementById('modal-close').addEventListener('click', closeModal);
+        document.getElementById('modal-cancel').addEventListener('click', closeModal);
+
+        document.getElementById('modal-save').addEventListener('click', () => {
+            const parsed = parseFloat(modalInput.value);
+            if (!isNaN(parsed) && parsed > 0) {
+                state.monthlyBudget = parsed;
+                renderAll();
+                closeModal();
+                showToast("Monthly budget updated successfully!");
+            } else {
+                showToast("Please enter a valid amount greater than 0.", "error");
+            }
+        });
+
+        // Add Expense Form
+        document.getElementById('expense-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const title = document.getElementById('exp-title').value.trim();
+            const amount = parseFloat(document.getElementById('exp-amount').value);
+            const category = document.getElementById('exp-category').value;
+            const date = document.getElementById('exp-date').value;
+
+            if (!title || isNaN(amount) || amount <= 0 || !date) {
+                showToast("Please fill in all fields correctly.", "error");
+                return;
+            }
+
+            const newTx = { id: Date.now(), title, amount, category, date };
+            state.expenses.unshift(newTx);
+            document.getElementById('expense-form').reset();
+            document.getElementById('exp-date').valueAsDate = new Date();
+            renderAll();
+            showToast("Expense added successfully!");
+        });
+
+        // Filter Category change
+        document.getElementById('filter-category').addEventListener('change', (e) => {
+            state.filterCategory = e.target.value;
+            renderAll();
+        });
+
+        // Reset demo data
+        document.getElementById('btn-reset').addEventListener('click', () => {
+            if (confirm("Are you sure you want to reset all data?")) {
+                state.monthlyBudget = 6000;
+                state.expenses = [];
+                renderAll();
+                showToast("Application data reset.");
+            }
+        });
+
+        function deleteExpense(id) {
+            state.expenses = state.expenses.filter(e => e.id !== id);
+            renderAll();
+            showToast("Transaction deleted.");
+        }
+
+        // Initial render
+        renderAll();
+    </script>
+</body>
+</html>
